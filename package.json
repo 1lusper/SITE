@@ -10,11 +10,16 @@
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run",
-    "db:push": "drizzle-kit generate && drizzle-kit migrate"
+    "db:push": "drizzle-kit generate && drizzle-kit migrate",
+    "build:client": "vite build",
+    "deploy:hostgator": "pnpm run build:client && node scripts/prepare-hostgator-deploy.mjs",
+    "deploy:hostgator:zip": "pnpm run deploy:hostgator && node scripts/build-hostgator-zip.mjs",
+    "deploy:hostgator:direct": "pnpm run deploy:hostgator && bash scripts/deploy-hostgator-direct.sh",
+    "deploy:hostgator:check": "bash scripts/check-hostgator-ftp.sh",
+    "deploy:hostgator:public-only": "bash scripts/deploy-hostgator-public-only.sh",
+    "deploy:hostgator:setup-env": "bash scripts/setup-hostgator-env.sh"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.693.0",
-    "@aws-sdk/s3-request-presigner": "^3.693.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -113,5 +118,9 @@
     "overrides": {
       "tailwindcss>nanoid": "3.3.7"
     }
+  },
+  "optionalDependencies": {
+    "@aws-sdk/client-s3": "^3.693.0",
+    "@aws-sdk/s3-request-presigner": "^3.693.0"
   }
 }
